@@ -91,7 +91,7 @@ var checkWhileAdding = function(req,res,next){
   else{
     if(req.body.password != req.body.cpass)
     {
-        res.render('add',{user:userDetails,message:"Password Do No Match"});
+        res.render('add',{user:userDetails,message:"Password Do Not Match"});
     }
     else{
       userDetails.allPass[category] = encrypt(req.body.category);
