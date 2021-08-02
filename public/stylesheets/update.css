@@ -1,0 +1,140 @@
+*{
+    box-sizing: border-box;
+}
+
+/* navbar styling starts */
+
+
+.navbar{
+    background-color: rgb(136, 10, 10) !important;
+   }
+   
+.user-name{
+     color: aliceblue;
+   }
+   
+
+.nav-item{
+    margin-right: 5px;
+    border: 1px solid red !important;
+    background-color: rgba(224, 168, 62, 0.836)
+  }
+  
+.head{
+    margin-right: 5px;
+  }
+  
+.navbar-brand{
+    color: rgb(243, 0, 0) !important;
+    font-weight: bolder;
+    font-size: 25px;
+  }
+
+/* navbar styling ends */  
+
+
+h1{
+    text-align: center;
+    margin-top: 3%;
+}
+
+
+h4{
+    text-align: center;
+}
+
+.content{
+    margin-top: 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+
+/* input fields labels starts */
+
+.head-old-pass{
+    margin-right: 78px;
+}
+
+.head-new-pass{
+    margin-right:72px;
+}
+
+.head-confirm-new-pass{
+    margin-right: 18.5px;
+}
+
+/* input fields labels ends */
+
+
+.old-new-pass{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rows{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.but{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+
+.alert-message{
+    margin-top: 60px;
+    width: 100%;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    border-radius: 10px;
+}
+
+
+.dropdown-menu{
+    background-color: rgba(224, 168, 62, 0.836) !important;
+    margin-top: .6rem !important;
+  }
+  
+  @media only screen and (max-width: 991px){
+    .navbar-collapse {
+      margin-top: 20px ;
+     
+  }
+  }
+
+/* media querries */
+
+@media only screen and (max-width: 475px) {
+
+    .rows{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .head-old-pass{
+        margin-right:0px;
+    }
+    
+    .head-new-pass{
+        margin-right:0px;
+    }
+    
+    .head-confirm-new-pass{
+        margin-right:0px;
+    }
+}

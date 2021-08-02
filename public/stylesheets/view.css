@@ -1,0 +1,74 @@
+*{
+    box-sizing: border-box;
+}
+
+
+/* navbar styling starts */
+
+
+.navbar{
+  background-color: rgb(136, 10, 10) !important;
+ }
+ 
+ .user-name{
+   color: aliceblue;
+ }
+ 
+
+.nav-item{
+    margin-right: 5px;
+    border: 1px solid red !important;
+    background-color: rgba(224, 168, 62, 0.836)
+}
+  
+  .head{
+    margin-right: 5px;
+}
+  
+.navbar-brand{
+    color: rgb(243, 0, 0) !important;
+    font-weight: bolder;
+    font-size: 25px;
+  }
+
+/* navbar styling ends */
+
+
+
+
+h1{
+    text-align: center;
+    margin-top: 5%;
+}
+
+.content{
+    margin-top: 7%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+.pass{
+    text-align: center;
+}
+
+.getPass-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-menu{
+  background-color: rgba(224, 168, 62, 0.836) !important;
+  margin-top: .6rem !important;
+}
+
+@media only screen and (max-width: 991px){
+  .navbar-collapse {
+    margin-top: 20px ;
+   
+}
+}

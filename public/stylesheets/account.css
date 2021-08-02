@@ -1,0 +1,146 @@
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+
+.navbar{
+    background-color: rgb(136, 10, 10) !important;
+   }
+   
+.user-name{
+    color: aliceblue;
+}
+
+.nav-item{
+    margin-right: 5px;
+    border: 1px solid red !important;
+    background-color: rgba(224, 168, 62, 0.836)
+}
+
+.head{
+    margin-right: 5px;
+}
+
+.navbar-brand{
+    color: rgb(243, 0, 0) !important;
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+.main-head{
+    height: 150px;
+    background: #FFF;
+   
+}
+
+.sidenav {
+    height: 100%;
+    background-color: #000;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.user-info{
+    margin-top: 15%;
+    margin-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+    padding: 0px 10px;
+}
+
+.alert-message{
+    margin-top: 40px;
+    margin-bottom: 50px;
+    width: 100%;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    border-radius: 10px;
+}
+
+h4{
+    align-items: center;
+}
+
+
+.change-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.warning-message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+p{
+    text-align: center;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+        margin-top: 0px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 40%; 
+        margin-top: 63px;
+    }
+
+
+    .sidenav{
+        margin-top: 63px;
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+}
+
+.login-main-text{
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2{
+    font-weight: 300;
+}
+
+.btn-black{
+    background-color: #000 !important;
+    color: #fff;
+}
+
+
+.dropdown-menu{
+    background-color: rgba(224, 168, 62, 0.836) !important;
+    margin-top: .6rem !important;
+  }
+  
+  @media only screen and (max-width: 991px){
+    .navbar-collapse {
+      margin-top: 20px ;
+     
+  }
+  }
