@@ -1,19 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
+
 const bodyParser = require('body-parser');
-
-
 
 const jwt = require('jsonwebtoken');  // jwt -> json web token
 
 
+// using local storage to generate a token
 if (typeof localStorage === "undefined" || localStorage === null) {
   var LocalStorage = require('node-localstorage').LocalStorage;
   localStorage = new LocalStorage('./scratch');
 }
 
 
+// this is the process to encrypt a password in such a way so that it can be decrypted back
 var crypto = require("crypto");
 
 let secrateKey = "secrateKey";
@@ -34,7 +35,7 @@ function decrypt(encrypted) {
 
 
 
-
+// bcrypt is the way of encrypting a password, so that it cannot be decrypted back
 var bcrypt = require('bcryptjs');
 
 var jsonParser = bodyParser.json()
@@ -47,7 +48,7 @@ const { json } = require('body-parser');
 
 
 
-// middlewares started
+// ----- middlewares started ----- // 
 
 function checkToken(req,res,next){
   var myToken = localStorage.getItem('myToken');
@@ -169,13 +170,16 @@ var checkPassBeforeDeletion = function(req,res,next){
   }
 };
 
-// middlewares end
+// -----  middlewares end ------ //
 
 
-/* GET home page. */
+
+/*  ALL GET REQUESTS */
 router.get('/', checkIfLoggedIn,function(req, res, next) {
     res.render('signIn');
 });
+
+
 
 router.get('/signIn',checkIfLoggedIn,function(req, res, next) {
   res.render('signIn');
@@ -234,132 +238,132 @@ router.get('/deleteAccount',checkToken,(req,res)=>{
 });
 
 
-  // sign Up
-  router.post('/signUp', urlencodedParser,function(req, res, next) {
-  
-    var findRecord = collectionModel.find({email:req.body.email});
-    findRecord.exec(function(err,data){
-      if(err) throw err;
-      if(data.length > 0 ){
-        res.render('signIn',{message:"email id already registered"});
-      }
-      else{
-    
-      var record = new collectionModel({
-        name:req.body.name,
-        email:req.body.email,
-        password:bcrypt.hashSync(req.body.password,10),
-        allPass:{"":""}
-      });
-      record.save(function(err,ress){
-        if(err) throw err;
-        res.render('signUp',{message:"Registered Successfully. Login to Continue"});
-      });
-      }
-      
-    });
-  });
+/*  ALL POST REQUESTS */
+router.post('/signUp', urlencodedParser,function(req, res, next) {
 
-
-// sign In
-router.post('/signIn',urlencodedParser,(req,res)=>{
-  var emailEntered = req.body.email;
-  var passwordEntered = req.body.pass;
   var findRecord = collectionModel.find({email:req.body.email});
-
   findRecord.exec(function(err,data){
     if(err) throw err;
-    if(data.length == 0 ){
-      res.render('signIn',{message:"Email id not registered"})
+    if(data.length > 0 ){
+      res.render('signIn',{message:"email id already registered"});
     }
     else{
-       if(bcrypt.compareSync(passwordEntered,data[0].password))
-       {
-          var token = jwt.sign({},'loginToken');
-          localStorage.setItem('myToken',token);
-          // localStorage.setItem('userRecord',JSON.stringify(data[0]));  // converting the object into string bcoz setItem function can onlu store string
-          // var userDetails = JSON.parse(localStorage.getItem('userRecord'));  // retrieving the object from the string by using JSON.parse function
-          req.session.userRecord=data[0];
-          // res.send(req.session.Record);
-          res.redirect('/dashboard')
-       }
-       else{
-          res.render('signIn',{title:'invalid details',message:"Invalid Email Id and Password"})
-       }
+  
+    var record = new collectionModel({
+      name:req.body.name,
+      email:req.body.email,
+      password:bcrypt.hashSync(req.body.password,10),
+      allPass:{"":""}
+    });
+    record.save(function(err,ress){
+      if(err) throw err;
+      res.render('signUp',{message:"Registered Successfully. Login to Continue"});
+    });
     }
+    
   });
 });
 
 
-router.post("/view",urlencodedParser,(req,res)=>{
-  var userDetails = req.session.userRecord;
-  category = req.body.category;
-  if(category == "Chose Your Option")
-  {
-    res.render('view',{user:userDetails,password:"",allCat:Object.keys(userDetails.allPass)});
+// sign In
+router.post('/signIn',urlencodedParser,(req,res)=>{
+var emailEntered = req.body.email;
+var passwordEntered = req.body.pass;
+var findRecord = collectionModel.find({email:req.body.email});
+
+findRecord.exec(function(err,data){
+  if(err) throw err;
+  if(data.length == 0 ){
+    res.render('signIn',{message:"Email id not registered"})
   }
   else{
-  res.render('view',{user:userDetails,password:decrypt(userDetails.allPass[category]),allCat:Object.keys(userDetails.allPass)});
-  }   
+      if(bcrypt.compareSync(passwordEntered,data[0].password))
+      {
+        var token = jwt.sign({},'loginToken');
+        localStorage.setItem('myToken',token);
+        // localStorage.setItem('userRecord',JSON.stringify(data[0]));  // converting the object into string bcoz setItem function can onlu store string
+        // var userDetails = JSON.parse(localStorage.getItem('userRecord'));  // retrieving the object from the string by using JSON.parse function
+        req.session.userRecord=data[0];
+        // res.send(req.session.Record);
+        res.redirect('/dashboard')
+      }
+      else{
+        res.render('signIn',{title:'invalid details',message:"Invalid Email Id and Password"})
+      }
+  }
+});
+});
+
+
+router.post("/view",urlencodedParser,(req,res)=>{
+var userDetails = req.session.userRecord;
+category = req.body.category;
+if(category == "Chose Your Option")
+{
+  res.render('view',{user:userDetails,password:"",allCat:Object.keys(userDetails.allPass)});
+}
+else{
+res.render('view',{user:userDetails,password:decrypt(userDetails.allPass[category]),allCat:Object.keys(userDetails.allPass)});
+}   
 })
 
 
 
 router.post("/addNewPass",urlencodedParser,checkWhileAdding,(req,res)=>{
-    var userDetails = req.session.userRecord;
-    category = req.body.category;
+  var userDetails = req.session.userRecord;
+  category = req.body.category;
 
-    var addPass = collectionModel.updateOne({email:userDetails.email},{allPass:userDetails.allPass})
+  var addPass = collectionModel.updateOne({email:userDetails.email},{allPass:userDetails.allPass})
 
-    addPass.exec(function(err,data){
-      if(err) throw err;
-      res.render('add',{user:userDetails,message:"Added Successfully"});
-    });
+  addPass.exec(function(err,data){
+    if(err) throw err;
+    res.render('add',{user:userDetails,message:"Added Successfully"});
   });
+});
 
 
 router.post("/update",urlencodedParser,checkWhileUpdating,checkToken,(req,res)=>{
-    var userDetails = req.session.userRecord;   
-    category = req.body.category;
-    var updateCatPass = collectionModel.updateOne({email:userDetails.email},{allPass:userDetails.allPass})
+  var userDetails = req.session.userRecord;   
+  category = req.body.category;
+  var updateCatPass = collectionModel.updateOne({email:userDetails.email},{allPass:userDetails.allPass})
 
-    updateCatPass.exec(function(err,data){
-      if(err) throw err;
-      res.render('update',{user:userDetails,allCat:Object.keys(userDetails.allPass),message:"Updated Successfully"});
-    });
+  updateCatPass.exec(function(err,data){
+    if(err) throw err;
+    res.render('update',{user:userDetails,allCat:Object.keys(userDetails.allPass),message:"Updated Successfully"});
   });
-  
+});
 
 
-  router.post('/changePmsPassword',urlencodedParser,checkWhileChangingAccPassword,checkToken,(req,res)=>{
-    var userDetails = req.session.userRecord;
 
-    var changePass = collectionModel.updateOne({email:userDetails.email},{password:bcrypt.hashSync(req.body.newPassword,10),})
-    changePass.exec(function(err,data){
-      if(err) throw err;
-      localStorage.removeItem('myToken');
-      req.session.destroy();
-      // localStorage.removeItem('userRecord');
-      res.render('signIn',{message:"Password Changed Successfully"});
-    });
-  
+router.post('/changePmsPassword',urlencodedParser,checkWhileChangingAccPassword,checkToken,(req,res)=>{
+  var userDetails = req.session.userRecord;
+
+  var changePass = collectionModel.updateOne({email:userDetails.email},{password:bcrypt.hashSync(req.body.newPassword,10),})
+  changePass.exec(function(err,data){
+    if(err) throw err;
+    localStorage.removeItem('myToken');
+    req.session.destroy();
+    // localStorage.removeItem('userRecord');
+    res.render('signIn',{message:"Password Changed Successfully"});
   });
 
+});
 
-  router.post('/confirmDeleteAccount',urlencodedParser,checkPassBeforeDeletion ,checkToken,(req,res)=>{
 
-    var userDetails = JSON.parse(localStorage.getItem('userRecord'));
-    var deleteAcc  = collectionModel.deleteOne({email:userDetails.email});
-    deleteAcc.exec(function(err){
-      if(err) throw err;
-      localStorage.removeItem('myToken');
-      req.session.destroy();
-      // localStorage.removeItem('userRecord');
-      res.render('signUp',{message:"Account Deleted"})
+router.post('/confirmDeleteAccount',urlencodedParser,checkPassBeforeDeletion ,checkToken,(req,res)=>{
 
-    })
-  });
-  
+  var userDetails = JSON.parse(localStorage.getItem('userRecord'));
+  var deleteAcc  = collectionModel.deleteOne({email:userDetails.email});
+  deleteAcc.exec(function(err){
+    if(err) throw err;
+    localStorage.removeItem('myToken');
+    req.session.destroy();
+    // localStorage.removeItem('userRecord');
+    res.render('signUp',{message:"Account Deleted"})
+
+  })
+});
+
   
 
 
