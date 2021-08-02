@@ -45,5 +45,7 @@ Users can even Update the already stored passoword in case it is changed by them
 <br />
 I have taken care of the user privacy and security while making this project. The Passwords are always encrypted before storing in the database so that no one can see them.
 
+<br /><br />
+
 ## *Website Link*
 http://vasu-garg-pms.azurewebsites.net/
