@@ -95,7 +95,7 @@ var checkWhileAdding = function(req,res,next){
         res.render('add',{user:userDetails,message:"Password Do Not Match"});
     }
     else{
-      userDetails.allPass[category] = encrypt(req.body.category);
+      userDetails.allPass[category] = encrypt(req.body.password);
       req.session.userRecord = userDetails;
       // localStorage.setItem('userRecord',JSON.stringify(userDetails));
       next();
