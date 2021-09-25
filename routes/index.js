@@ -139,7 +139,8 @@ var checkWhileUpdating = function(req,res,next){
 
 
 var checkWhileChangingAccPassword = function(req,res,next){
-  var userDetails = JSON.parse(localStorage.getItem('userRecord'));
+  //var userDetails = JSON.parse(localStorage.getItem('userRecord'));
+  var userDetails = req.session.userRecord;
   var oldPasswordEntered = req.body.oldPassword;
   var newPasswordEntered = req.body.newPassword;
   var confirmNewPassword = req.body.confirmNewPassword;
@@ -338,7 +339,7 @@ router.post("/update",urlencodedParser,checkWhileUpdating,checkToken,(req,res)=>
 router.post('/changePmsPassword',urlencodedParser,checkWhileChangingAccPassword,checkToken,(req,res)=>{
   var userDetails = req.session.userRecord;
 
-  var changePass = collectionModel.updateOne({email:userDetails.email},{password:bcrypt.hashSync(req.body.newPassword,10),})
+  var changePass = collectionModel.updateOne({email:userDetails.email},{password:bcrypt.hashSync(req.body.newPassword,10)})
   changePass.exec(function(err,data){
     if(err) throw err;
     localStorage.removeItem('myToken');
