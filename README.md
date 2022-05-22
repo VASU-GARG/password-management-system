@@ -2,7 +2,7 @@
 <br /><br />
 
 ## *Website Link*
-http://vasu-garg-pms.azurewebsites.net/
+https://pms-full-stack-project.herokuapp.com/
 
 <br /><br />
 ### *REASON FOR TAKING UP THIS PROJECT* :
