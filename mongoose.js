@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://Vasu:Vasu@cluster0.6vuhk.mongodb.net/PMS?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://Vasu:****@cluster0.6vuhk.mongodb.net/PMS?retryWrites=true&w=majority");
 
 collectionSchema = mongoose.Schema({
         name:String,
