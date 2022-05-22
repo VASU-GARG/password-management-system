@@ -271,7 +271,7 @@ router.post('/signIn',urlencodedParser,(req,res)=>{
 var emailEntered = req.body.email;
 var passwordEntered = req.body.pass;
 var findRecord = collectionModel.find({email:req.body.email});
-
+  
 findRecord.exec(function(err,data){
   if(err) throw err;
   if(data.length == 0 ){
